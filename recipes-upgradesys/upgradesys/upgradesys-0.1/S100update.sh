@@ -8,4 +8,4 @@
 ### END INIT INFO
 
 echo "System update start ..."
-flash_nand.sh &
+flash_nand.sh

@@ -7,10 +7,10 @@ part_rootfs=3
 echo heartbeat > /sys/class/leds/user/trigger
 
 mfg_path=/run/media/mmcblk0p1/mfg-images
-uboot=${mfg_path}/u-boot-mys6ull14x14-nand.imx
+uboot=${mfg_path}/u-boot.imx
 kernel=${mfg_path}/zImage
-dtb=${mfg_path}/mys-imx6ull-14x14-evk-gpmi-weim.dtb
-rootfs=${mfg_path}/core-image-base-mys6ull14x14.rootfs.tar.xz
+dtb=${mfg_path}/gpmi-weim.dtb
+rootfs=${mfg_path}/core-image-base.rootfs.tar.xz
 
 if [ -d $mfg_path ] && [ -s $uboot ] && [ -s $kernel ] && [ -s $dtb ] && [ -s $rootfs ]
 then
@@ -53,13 +53,48 @@ else
 fi
 
 echo "Flashing kernel"
-flash_erase /dev/mtd${part_rootfs} 0 0 \
- && ubiformat /dev/mtd${part_rootfs} \
- && ubiattach /dev/ubi_ctrl -m ${part_rootfs} \
- && ubimkvol /dev/ubi0 -Nrootfs -m \
- && mkdir -p /run/media/mtd${part_rootfs} \
- && mount -t ubifs ubi0:rootfs /run/media/mtd${part_rootfs} \
- && tar xvf ${rootfs} -C /run/media/mtd${part_rootfs}
+flash_erase /dev/mtd${part_rootfs} 0 0
+if [ $? -ne 0 ]
+then
+    echo "erase /dev/mtd${part_rootfs} fail"
+    echo 0 > /sys/class/leds/user/brightness
+    exit
+fi
+
+ubiformat /dev/mtd${part_rootfs}
+if [ $? -ne 0 ]
+then
+    echo "format /dev/mtd${part_rootfs} fail"
+    echo 0 > /sys/class/leds/user/brightness
+    exit
+fi
+
+ubiattach /dev/ubi_ctrl -m ${part_rootfs}
+if [ $? -ne 0 ]
+then
+    echo "attach /dev/mtd${part_rootfs} fail"
+    echo 0 > /sys/class/leds/user/brightness
+    exit
+fi
+
+ubimkvol /dev/ubi0 -Nrootfs -m
+if [ $? -ne 0 ]
+then
+    echo "make volume /dev/mtd${part_rootfs} fail"
+    echo 0 > /sys/class/leds/user/brightness
+    exit
+fi
+
+mkdir -p /run/media/mtd${part_rootfs} \
+ && mount -t ubifs ubi0:rootfs /run/media/mtd${part_rootfs}
+if [ $? -ne 0 ]
+then
+    echo "mount /dev/mtd${part_rootfs} fail"
+    echo 0 > /sys/class/leds/user/brightness
+    exit
+fi
+
+tar xvf ${rootfs} -C /run/media/mtd${part_rootfs}
 if [ $? -eq 0 ]
 then
     echo "Flash filesystem okay"
@@ -73,3 +108,5 @@ else
     exit
 fi
 umount /run/media/mtd${part_rootfs}
+echo "Programming success"
+echo "You need reboot the board"

@@ -17,9 +17,10 @@ FILES_${PN} += "/linuxrc \
         /S100update.sh"
 
 do_install() {
-	     install -d ${D}${bindir}
-	     install -m 0777 flash_nand.sh ${D}${bindir}
-	     install -m 0777 linuxrc ${D}
-	     install -d ${D}/${sysconfdir}/rc5.d
-	     install -m 0777 S100update.sh ${D}/${sysconfdir}/rc5.d
+	install -d ${D}${bindir}
+	install -m 0777 flash_nand.sh ${D}${bindir}
+	install -m 0777 linuxrc ${D}
+	install -d ${D}/${sysconfdir}/rc5.d
+	install -m 0777 S100update.sh ${D}/${sysconfdir}/rc5.d
+    
 }
