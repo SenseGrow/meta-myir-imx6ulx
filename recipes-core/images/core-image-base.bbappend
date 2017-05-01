@@ -6,8 +6,16 @@ IMAGE_INSTALL += "imx-kobs \
     gzip \
     mtd-utils \
     mtd-utils-ubifs \
-    upgradesys \
-    rpm \
+    ntpdate \
+    vlan \
+    tar \
+    net-tools \
+    ethtool \
+    evtest \
+    i2c-tools \
+    iperf3 \
+    iproute2 \
+    iputils \
     udev-extraconf \
-    udev-rules-imx"
-
+    rpm \
+    myir-rc-local"
