@@ -17,3 +17,4 @@ disable_service() {
     rm ${IMAGE_ROOTFS}${sysconfdir}/rc5.d/S99stop-bootlogd
 }
 ROOTFS_POSTUNINSTALL_COMMAND += "disable_service; "
+IMAGE_FSTYPES = "ext4 "
