@@ -94,6 +94,7 @@ PREFERRED_PROVIDER_virtual/libg2d_mx6ul = ""
 # Handle default kernel
 IMX_DEFAULT_KERNEL = "linux-mys6ulx"
 IMX_DEFAULT_KERNEL_mx6ul = "linux-mys6ulx"
+IMX_DEFAULT_KERNEL_mx6ull = "linux-mys6ulx"
 
 PREFERRED_PROVIDER_virtual/kernel ??= "${IMX_DEFAULT_KERNEL}"
 
