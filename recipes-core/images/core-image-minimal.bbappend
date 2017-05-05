@@ -6,8 +6,10 @@ IMAGE_INSTALL += "imx-kobs \
     gzip \
     mtd-utils \
     mtd-utils-ubifs \
-    upgradesys \
     rpm \
     udev-extraconf \
-    udev-rules-imx"
+    udev-rules-imx \
+    wpa-supplicant \
+    wpa-supplicant-cli \
+    wpa-supplicant-passphrase"
 
