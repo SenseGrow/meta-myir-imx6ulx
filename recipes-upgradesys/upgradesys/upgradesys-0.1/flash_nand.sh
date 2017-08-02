@@ -7,10 +7,17 @@ part_rootfs=3
 echo heartbeat > /sys/class/leds/user/trigger
 
 mfg_path=/run/media/mmcblk0p1/mfg-images
-uboot=${mfg_path}/u-boot.imx
-kernel=${mfg_path}/zImage
-dtb=${mfg_path}/gpmi-weim.dtb
-rootfs=${mfg_path}/core-image-base.rootfs.tar.xz
+. ${mfg_path}/Manifest
+uboot=${mfg_path}/${ubootfile}
+kernel=${mfg_path}/${kernelfile}
+dtb=${mfg_path}/${dtbfile}
+rootfs=${mfg_path}/${rootfsfile}
+
+echo "Update file list:"
+echo "uboot file: ${uboot}"
+echo "kernel file: ${kernel}"
+echo "dtb file: ${dtb}"
+echo "rootfs file: ${rootfs}"
 
 if [ -d $mfg_path ] && [ -s $uboot ] && [ -s $kernel ] && [ -s $dtb ] && [ -s $rootfs ]
 then

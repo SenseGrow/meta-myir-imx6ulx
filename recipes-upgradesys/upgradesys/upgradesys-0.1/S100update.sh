@@ -8,4 +8,16 @@
 ### END INIT INFO
 
 echo "System update start ..."
-flash_nand.sh
+if grep "update_emmc" /proc/cmdline > /dev/null;then
+	flash_emmc.sh &
+else
+        echo "Normal boot"                                    
+        exit 0                                                
+fi
+
+if grep "update_nand" /proc/cmdline > /dev/null;then                 
+	flash_nand.sh
+else                                            
+        echo "Normal boot"                                    
+        exit 0                                                
+fi
