@@ -4,6 +4,7 @@ IMAGE_INSTALL = "imx-kobs \
     bzip2 \
     xz \
     gzip \
+    mmc-utils \
     mtd-utils \
     mtd-utils-ubifs \
     upgradesys \
