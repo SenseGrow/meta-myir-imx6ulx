@@ -18,4 +18,6 @@ IMAGE_INSTALL += "imx-kobs \
     iputils \
     udev-extraconf \
     rpm \
+    openssh \
+    v4l-utils \
     myir-rc-local"
