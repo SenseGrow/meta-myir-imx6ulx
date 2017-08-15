@@ -125,16 +125,8 @@ umount ${DRIVE}* > /dev/null 2>&1
 echo OK
 echo
 
-let STEP=STEP+1
-echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Checking device size ..."
-echo 0 > /sys/class/block/mmcblk1boot0/force_ro
-dd if=/dev/zero of=${DRIVE}boot0 bs=1024k count=16 > /dev/null 2>&1
-cmd_check $? "Checkign device size"
-
-dd if=${ubootfile} of=${DRIVE}boot0 bs=1024 seek=1 conv=fsync > /dev/null 2>&1
-cmd_check $? "Update uboot"
-
-echo 1 > /sys/class/block/mmcblk1boot0/force_ro
+dd if=/dev/zero of=${DRIVE} bs=1024 count=1 > /dev/null 2>&1
+cmd_check $? "Destroy partition table"
 
 SIZE=`fdisk -l $DRIVE | grep Disk | awk '{print $5}'`
 echo -n "DISK SIZE: $SIZE bytes"
@@ -158,6 +150,18 @@ cmd_check $? "Re-partition device"
 mdev -s > /dev/null 2>&1
 umount ${DRIVE}* > /dev/null 2>&1
 echo
+
+let STEP=STEP+1
+echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Write u-boot ..."
+dd if=/dev/zero of=${DRIVE} bs=1k seek=768 count=8 conv=fsync > /dev/null 2>&1
+cmd_check $? "Clean u-boot arg"
+echo 0 > /sys/class/block/mmcblk1boot0/force_ro
+cmd_check $? "Write U-Boot to eMMC"
+dd if=${ubootfile} of=${DRIVE}boot0 bs=512 seek=2 > /dev/null 2>&1
+cmd_check $? "Update uboot"
+echo 1 > /sys/class/block/mmcblk1boot0/force_ro
+mmc bootpart enable 1 1 ${DRIVE}
+cmd_check $? "Enable boot partion 1 to boot"
 
 let STEP=STEP+1
 echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Formating boot partition ... "
@@ -219,8 +223,8 @@ echo
 
 let STEP=STEP+1
 echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Copy rootfs files ... "
-#mkdir -p /run/media/${rootpart}
-#mount -t ext4 -o rw,noatime,nodiratime /dev/${rootpart} /run/media/${rootpart} > /dev/null 2>&1
+mkdir -p /run/media/${rootpart}
+mount -t ext4 -o rw,noatime,nodiratime /dev/${rootpart} /run/media/${rootpart} > /dev/null 2>&1
 #cmd_check $? "mount ${rootpart}"
 tar xvf ${rootfsfile} -C /run/media/${rootpart}
 cmd_check $? "Extra ${rootfsfile}"
