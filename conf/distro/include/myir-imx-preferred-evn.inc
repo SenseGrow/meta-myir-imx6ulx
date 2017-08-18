@@ -24,10 +24,10 @@ DEFAULTTUNE_mx6ul = "cortexa7hf-neon"
 PREFERRED_VERSION_linux-libc-headers = "4.1"
 
 # Use systemd as default init manager - comment out for now
-VIRTUAL-RUNTIME_init_manager = "systemd"
-PREFERRED_PROVIDER_udev = "systemd"
-PREFERRED_PROVIDER_udev-utils = "systemd"
-DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
-IMX_DEFAULT_DISTRO_FEATURES += " systemd"
+#VIRTUAL-RUNTIME_init_manager = "systemd"
+#PREFERRED_PROVIDER_udev = "systemd"
+#PREFERRED_PROVIDER_udev-utils = "systemd"
+#DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
+#IMX_DEFAULT_DISTRO_FEATURES += " systemd"
 
 GCCVERSION = "5.3.0"
