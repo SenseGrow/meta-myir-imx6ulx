@@ -7,8 +7,13 @@ inherit module
 
 SRCREV = "cd53ae8cef873f88f05678a9e01aab81a2ea93fe"
 SRC_URI = "git://github.com/MYiR-Dev/RTL8188eu-driver;protocol=https;branch=master"
-
 S = "${WORKDIR}/git"
+FILES_${PN} = "${base_libdir}/firmware/rtlwifi"
+
+do_install_append() {
+    install -d ${D}${base_libdir}/firmware/rtlwifi
+    install -m 0755 rtl8188eufw.bin ${D}${base_libdir}/firmware/rtlwifi/
+}
 
 # The inherit of module.bbclass will automatically name module packages with
 # "kernel-module-" prefix as required by the oe-core build environment.
