@@ -9,15 +9,12 @@
 
 echo "System update start ..."
 if grep "update_emmc" /proc/cmdline > /dev/null;then
-	flash_emmc.sh &
-else
-        echo "Normal boot"                                    
-        exit 0                                                
-fi
-
-if grep "update_nand" /proc/cmdline > /dev/null;then                 
+    echo "Update for eMMC flash"
+	flash_emmc.sh
+elif grep "update_nand" /proc/cmdline > /dev/null;then
+    echo "Update for NAND flash"
 	flash_nand.sh
-else                                            
-        echo "Normal boot"                                    
-        exit 0                                                
+else
+    echo "Update failed! Please restart and enter update process."
+    exit 0
 fi
