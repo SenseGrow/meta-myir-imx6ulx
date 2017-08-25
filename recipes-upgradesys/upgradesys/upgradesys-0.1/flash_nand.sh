@@ -7,7 +7,14 @@ part_rootfs=3
 echo heartbeat > /sys/class/leds/user/trigger
 
 mfg_path=/run/media/mmcblk0p1/mfg-images
-. ${mfg_path}/Manifest
+if [ -f ${mfg_path}/Manifest ]
+then
+    . ${mfg_path}/Manifest
+else
+    echo "Can not find file ${mfg_path}Manifest"
+    echo 0 > /sys/class/leds/user/brightness
+    exit 1
+fi
 uboot=${mfg_path}/${ubootfile}
 kernel=${mfg_path}/${kernelfile}
 dtb=${mfg_path}/${dtbfile}
@@ -25,6 +32,7 @@ then
 else
     echo 0 > /sys/class/leds/user/brightness
     echo "file or directory not exist"
+    exit 1
 fi
 
 echo "Flashing uboot"
@@ -35,7 +43,7 @@ then
 else
     echo "Flash uboot failed"
     echo 0 > /sys/class/leds/user/brightness
-    exit
+    exit 1
 fi
 
 echo "Flashing kernel"
