@@ -20,4 +20,6 @@ IMAGE_INSTALL += "imx-kobs \
     rpm \
     openssh \
     v4l-utils \
+    ${@base_contains("MACHINE", "mys6ull14x14", "rtl8188eu-driver", "", d)} \
+    alsa-utils \
     myir-rc-local"
