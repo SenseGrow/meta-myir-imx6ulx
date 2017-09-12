@@ -10,15 +10,10 @@ require recipes-kernel/linux/linux-dtb.inc
 
 DEPENDS += "lzop-native bc-native"
 
-#SRCBRANCH = "imx_4.1.15_2.0.0_ga"
 LOCALVERSION = "-1.2.0"
-#SRCREV = "77f61547834c4f127b44b13e43c59133a35880dc"
-SRCREV = "8d98da659f6572fb374fab26107a6eda87a96576"
-# Add patches for gcc 6 compiler issue
-#SRC_URI = "git://git.toradex.com/linux-toradex.git;protocol=git;branch=${SRCBRANCH} \
-#           file://defconfig"
-SRCBRANCH = "mys-imx6ulx"
-SRC_URI = "git:///home/blackrose/mys-imx6ul/MYS-IMX6UL-Linux;protocol=file;branch=${SRCBRANCH} \
+SRCREV = "62ad3c166a09191a64687d88ddf539f9a8127020"
+SRCBRANCH = "mys-6ulx"
+SRC_URI = "git:///${HOME}/MYiR-iMX-Linux;protocol=file;branch=${SRCBRANCH} \
         file://defconfig"
 
 DEFAULT_PREFERENCE = "1"
