@@ -11,7 +11,7 @@ LICENSE = "GPLv2+"
 SRCBRANCH = "mys-6ulx"
 UBOOT_SRC = "git:///${HOME}/MYiR-iMX-uboot;protocol=file"
 SRC_URI = "${UBOOT_SRC};branch=${SRCBRANCH}"
-SRCREV = "4ade113b07bf233a2c120eca1558567643751044"
+SRCREV = "59ee49a0698433d3f1f34d9ad78f42c226e16c94"
 
 S = "${WORKDIR}/git"
 
