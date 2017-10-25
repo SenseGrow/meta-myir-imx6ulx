@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 inherit module
 
-SRCREV = "cd53ae8cef873f88f05678a9e01aab81a2ea93fe"
+SRCREV = "5cfd9b9323e774dd8ee75a9523bd6a3f9d467cb6"
 SRC_URI = "git://github.com/MYiR-Dev/RTL8188eu-driver;protocol=https;branch=master"
 S = "${WORKDIR}/git"
 FILES_${PN} = "${base_libdir}/firmware/rtlwifi"
