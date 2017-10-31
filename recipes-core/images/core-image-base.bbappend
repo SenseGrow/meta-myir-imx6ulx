@@ -27,4 +27,5 @@ IMAGE_INSTALL += "imx-kobs \
     ${@base_contains("MACHINE", "mys6ull14x14", "rtl8188eu-driver", "", d)} \
     alsa-utils \
     ppp \
+    ppp-quectel \
     myir-rc-local"
