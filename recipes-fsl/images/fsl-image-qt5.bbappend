@@ -24,4 +24,5 @@ IMAGE_INSTALL += "imx-kobs \
     v4l-utils \
     alsa-utils \
     ppp \
+    ppp-quectel \
     myir-rc-local"
