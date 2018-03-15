@@ -1,4 +1,11 @@
-IMAGE_INSTALL += "imx-kobs \
+DESCRIPTION = "Freescale Image - Adds Qt5"
+LICENSE = "MIT"
+inherit populate_sdk_qt5
+
+require recipes-fsl/images/fsl-image-qt5-validation-imx.bb
+
+IMAGE_INSTALL += " \
+    imx-kobs \
     tslib-calibrate \
     tslib-conf \
     tslib-tests \
@@ -25,4 +32,5 @@ IMAGE_INSTALL += "imx-kobs \
     alsa-utils \
     ppp \
     ppp-quectel \
-    myir-rc-local"
+    myir-rc-local \
+"
