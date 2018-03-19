@@ -15,6 +15,15 @@ echo "env file: ${envfile}"
 echo "kernel file: ${kernelfile}"
 echo "dtbfile file: ${dtbfile}"
 echo "rootfs file: ${rootfsfile}"
+echo "LED name: ${ledname}"
+
+if echo ${ledname} | egrep -q '^[0-9]+$'; then
+	echo "LED is GPIO"
+	echo ${ledname} > /sys/class/gpio/export
+	echo "out" > /sys/class/gpio/gpio${ledname}/direction
+else
+	echo "LED is name"
+fi
 
 bootpart=""
 rootpart=""
@@ -22,23 +31,40 @@ datapart=""
 
 LED_PID=""
 
-update_start()
+update_start_gpioled()
 {
 	echo "Update starting..."
-	echo heartbeat > /sys/class/leds/user/trigger
 	while true;do
 		echo "Updating..."
+		echo 1 > /sys/class/gpio/gpio${ledname}/value
 		sleep 1
+		echo "Updating..."
+		echo 0 > /sys/class/gpio/gpio${ledname}/value
+		sleep 1
+	done
+}
+
+update_start_nameled()
+{
+	echo "Update starting..."
+	echo heartbeat > /sys/class/leds/${ledname}/trigger
+	while true;do
 		echo "Updating..."
 		sleep 1
 	done
 }
 
+
+
 update_success()
 {
 	kill $LED_PID
-	echo none > /sys/class/leds/user/trigger
-	echo 1 > /sys/class/leds/user/brightness
+	if echo ${ledname} | egrep -q '^[0-9]+$'; then
+		echo 0 > /sys/class/gpio/gpio${ledname}/value
+	else
+		echo none > /sys/class/leds/${ledname}/trigger
+		echo 1 > /sys/class/leds/${ledname}/brightness
+	fi
 	while true;do
 		echo "Update complete..."
 		sleep 1
@@ -50,8 +76,13 @@ update_success()
 update_fail()
 {
 	kill $LED_PID
-	echo none > /sys/class/leds/user/trigger
-	echo 0 > /sys/class/leds/user/brightness
+	if echo ${ledname} | egrep -q '^[0-9]+$'; then
+		echo 1 > /sys/class/gpio/gpio${ledname}/value
+	else
+		echo none > /sys/class/leds/${ledname}/trigger
+		echo 0 > /sys/class/leds/${ledname}/brightness
+	fi
+
 	while true;do
 		echo "Update failed..."
 		sleep 1
@@ -89,8 +120,13 @@ else
 	exit 0
 fi
 
-update_start &
-LED_PID=$!
+if echo ${ledname} | egrep -q '^[0-9]+$'; then
+	update_start_gpioled &
+	LED_PID=$!
+else
+	update_start_nameled &
+	LED_PID=$!
+fi
 
 STEP=1
 TOTAL_STEPS=10
