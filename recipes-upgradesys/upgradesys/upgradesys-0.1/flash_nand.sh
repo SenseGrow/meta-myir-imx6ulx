@@ -1,8 +1,9 @@
 #!/bin/sh
 part_uboot=0
-part_kernel=1
-part_dtb=2
-part_rootfs=3
+part_uboot_env=1
+part_kernel=2
+part_dtb=3
+part_rootfs=4
 
 LED_PID=""
 
@@ -107,6 +108,19 @@ else
     update_fail
     exit 1
 fi
+
+
+echo "Erasing bootloader env"
+flash_erase /dev/mtd${part_uboot_env} 0 0
+if [ $? -eq 0 ]
+then
+    echo "Erase uboot_env okay"
+else
+    echo "Erase uboot_env failed"
+    update_fail
+    exit 1
+fi
+
 
 echo "Flashing uboot"
 flash_erase /dev/mtd${part_uboot} 0 0 && kobs-ng init -x -v ${uboot}

@@ -65,12 +65,12 @@ update_success()
 		echo none > /sys/class/leds/${ledname}/trigger
 		echo 1 > /sys/class/leds/${ledname}/brightness
 	fi
-	while true;do
-		echo "Update complete..."
-		sleep 1
-		echo "Update complete..."
-		sleep 1
-	done
+    
+    echo "************************************************"
+    echo "********** System update successfully **********"
+    echo "************************************************"
+    echo
+
 }
 
 update_fail()
@@ -196,12 +196,23 @@ cmd_check $? "Write U-Boot to eMMC"
 dd if=${ubootfile} of=${DRIVE}boot0 bs=512 seek=2 > /dev/null 2>&1
 cmd_check $? "Update uboot"
 echo 1 > /sys/class/block/mmcblk1boot0/force_ro
+sleep 1
+
 mmc bootpart enable 1 1 ${DRIVE}
 cmd_check $? "Enable boot partion 1 to boot"
+
+boot_config=`mmc extcsd read /dev/mmcblk1 | grep PARTITION_CONFIG | grep 0x48`
+
+if [ "X$boot_config" = "X" ]; then
+    echo "eMMC Boot Config failed"
+	update_fail
+fi
+
 
 let STEP=STEP+1
 echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Formating boot partition ... "
 
+umount ${DRIVE}* > /dev/null 2>&1
 if [ -b ${DRIVE}1 ]; then
 	mkfs.fat -F 32 -n "boot" ${DRIVE}1 > /dev/null 2>&1
 	cmd_check $? "Formating boot partition"
@@ -222,7 +233,7 @@ echo
 
 let STEP=STEP+1
 echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Formating rootfs partition ... "
-
+umount ${DRIVE}* > /dev/null 2>&1
 if [ -b ${DRIVE}2 ]; then
 	mkfs.ext4 -F -L "rootfs" ${DRIVE}2 > /dev/null 2>&1
 	cmd_check $? "Formating rootfs partition"
@@ -244,7 +255,12 @@ echo
 sleep 5
 
 let STEP=STEP+1
+umount /dev/${bootpart}
 echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Copy boot files ... "
+mkdir -p /run/media/${bootpart}
+mount /dev/${bootpart} /run/media/${bootpart}
+cmd_check $? "mount ${bootpart} failed"
+
 cp ${dtbfile} /run/media/${bootpart}
 cmd_check $? "Copy ${dtbfile}"
 cp ${envfile} /run/media/${bootpart}
@@ -253,20 +269,20 @@ echo ${kernelfile}
 cp ${kernelfile} /run/media/${bootpart}
 cmd_check $? "Copy ${kernelfile}"
 sync
-umount /run/media/${bootpart}
+umount /dev/${bootpart}
 echo OK
 echo
 
 let STEP=STEP+1
+umount /dev/${rootpart}
 echo -n "[ ${STEP} / ${TOTAL_STEPS} ] Copy rootfs files ... "
 mkdir -p /run/media/${rootpart}
-mount -t ext4 -o rw,noatime,nodiratime /dev/${rootpart} /run/media/${rootpart} > /dev/null 2>&1
-#cmd_check $? "mount ${rootpart}"
+mount -t ext4 -o rw,noatime,nodiratime /dev/${rootpart} /run/media/${rootpart}
+cmd_check $? "mount ${rootpart} failed"
 tar xvf ${rootfsfile} -C /run/media/${rootpart}
 cmd_check $? "Extra ${rootfsfile}"
 sync
-umount /run/media/${rootpart}
-echo OK
+umount /dev/${rootpart}
 echo OK
 echo
 
@@ -279,16 +295,11 @@ if [ -s ${datafile} ];then
 	tar -xmf ${datafile} -C /media/${datapart} > /dev/null 2>&1
 	cmd_check $? "Extra ${datafile}"
 	sync
-	umount /run/media/${datapart}
+	umount /dev/${datapart}
 	echo OK
 	echo
 fi
 
-
-echo "************************************************"
-echo "********** System update successfully **********"
-echo "************************************************"
-echo
 
 update_success
 

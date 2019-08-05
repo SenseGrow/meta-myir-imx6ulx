@@ -28,4 +28,5 @@ IMAGE_INSTALL += "imx-kobs \
     alsa-utils \
     ppp \
     ppp-quectel \
+    hostapd \
     myir-rc-local"
