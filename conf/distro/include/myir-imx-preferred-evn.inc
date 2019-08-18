@@ -21,7 +21,7 @@ DEFAULTTUNE_mx6ul = "cortexa7hf-neon"
 # Enable the kenrel loadable module as default
 #USE_GPU_VIV_MODULE = "1"
 
-PREFERRED_VERSION_linux-libc-headers = "4.1"
+PREFERRED_VERSION_linux-libc-headers = "4.14"
 
 # Use systemd as default init manager - comment out for now
 #VIRTUAL-RUNTIME_init_manager = "systemd"
@@ -30,4 +30,4 @@ PREFERRED_VERSION_linux-libc-headers = "4.1"
 #DISTRO_FEATURES_BACKFILL_CONSIDERED = "sysvinit"
 #IMX_DEFAULT_DISTRO_FEATURES += " systemd"
 
-GCCVERSION = "5.3.0"
+#GCCVERSION = "5.3.0"

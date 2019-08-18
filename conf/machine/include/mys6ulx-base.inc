@@ -98,7 +98,7 @@ IMX_DEFAULT_KERNEL_mx6ull = "linux-mys6ulx"
 
 PREFERRED_PROVIDER_virtual/kernel ??= "${IMX_DEFAULT_KERNEL}"
 
-SOC_DEFAULT_IMAGE_FSTYPES = "sdcard.gz ext3 ubi ubifs"
+SOC_DEFAULT_IMAGE_FSTYPES = "wic.gz ext3 ubi ubifs"
 
 SDCARD_ROOTFS ?= "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext4"
 IMAGE_FSTYPES ?= "${SOC_DEFAULT_IMAGE_FSTYPES}"

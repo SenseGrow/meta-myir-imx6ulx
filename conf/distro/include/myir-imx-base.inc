@@ -1,6 +1,6 @@
 DISTRO = "fsl-imx"
 DISTRO_NAME = "Freescale i.MX Release Distro"
-DISTRO_VERSION = "4.1.15-2.0.1"
+DISTRO_VERSION = "4.14-2.0"
 DISTRO_CODENAME = "master"
 SDK_VENDOR = "-pokysdk"
 SDK_VERSION := "${DISTRO_VERSION}"
@@ -15,11 +15,13 @@ LOCALCONF_VERSION = "1"
 IMX_DEFAULT_DISTRO_FEATURES = "largefile opengl ptest multiarch bluez"
 IMX_DEFAULT_EXTRA_RDEPENDS = "packagegroup-core-boot"
 IMX_DEFAULT_EXTRA_RRECOMMENDS = "kernel-module-af-packet"
-IMAGE_FSTYPES = "tar.bz2 tar.xz ext4 sdcard"
+IMAGE_FSTYPES = "tar.bz2 tar.xz ext4 wic.gz"
 
 BBMASK = "meta-fsl-arm/recipes-kernel/linux/linux-imx_4.1.15.bb"
+BBMASK .= "|meta-myir-imx6ulx/recipes-kernel/linux/linux-mys6ulx_4.1.15.bb"
 BBMASK .= "|meta-fsl-arm/recipes-kernel/linux/linux-imx-mfgtool_4.1.15.bb"
 BBMASK .= "|meta-freescale/recipes-multimedia/gstreamer/gstreamer1.0-plugins-bad_%.bbappend"
+BBMASK .= "|meta-myir-imx6ulx/recipes-fsl/images/fsl-image-qt5.bbappend"
 BBMASK .= "|meta-fsl-arm/qt5-layer/recipes-qt/qt5/qtbase_%.bbappend"
 BBMASK .= "|meta-fsl-arm/recipes-bsp/firmware-imx"
 
@@ -66,6 +68,7 @@ SANITY_TESTED_DISTROS ?= " \
             Ubuntu-14.04 \n \
             Ubuntu-14.10 \n \
             Ubuntu-15.04 \n \
+            Ubuntu-16.04 \n \
             Fedora-21 \n \
             CentOS-6.* \n \
             CentOS-7.* \n \

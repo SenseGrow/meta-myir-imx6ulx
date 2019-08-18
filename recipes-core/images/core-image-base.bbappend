@@ -8,8 +8,6 @@ IMAGE_INSTALL += "imx-kobs \
     dosfstools \
     mtd-utils \
     mtd-utils-ubifs \
-    ntpdate \
-    vlan \
     tar \
     net-tools \
     ethtool \
@@ -20,11 +18,10 @@ IMAGE_INSTALL += "imx-kobs \
     iputils \
     udev-extraconf \
     rpm \
-    iperf \
     openssh \
     openssl \
     v4l-utils \
-    ${@base_contains("MACHINE", "mys6ull14x14", "rtl8188eu-driver", "", d)} \
+    ${@oe.utils.conditional("MACHINE", "mys6ull14x14", "rtl8188eu-driver", "", d)} \
     alsa-utils \
     ppp \
     ppp-quectel \
