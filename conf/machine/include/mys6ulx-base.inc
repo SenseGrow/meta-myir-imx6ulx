@@ -121,7 +121,7 @@ WKS_FILE_DEPENDS ?= " \
     e2fsprogs-native \
     bmap-tools-native \
 "
-WKS_FILE = "sdimage-bootpart.wks"
+WKS_FILE = "myd-y6ull14x14-bootpart.wks"
 
 MACHINE_FEATURES = "apm usbgadget usbhost vfat alsa touchscreen"
 

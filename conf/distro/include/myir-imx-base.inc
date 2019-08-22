@@ -25,9 +25,7 @@ BBMASK .= "|meta-myir-imx6ulx/recipes-fsl/images/fsl-image-qt5.bbappend"
 BBMASK .= "|meta-fsl-arm/qt5-layer/recipes-qt/qt5/qtbase_%.bbappend"
 BBMASK .= "|meta-myir-imx6ulx/recipes-bsp/u-boot/u-boot-imx-mfgtool_2018.09.bb"
 BBMASK .= "|meta-myir-imx6ulx/recipes-bsp/u-boot/u-boot-mys6ulx_2018.09.bb"
-BBMASK .= "|meta-ioeye-myir-gateway/recipes-networking/6lbr/6lbr.bb"
 BBMASK .= "|meta-fsl-arm/recipes-bsp/firmware-imx"
-
 BBMASK .= "|meta-fsl-arm/recipes-graphics/images/core-image-weston.bbappend"
 
 DISTRO_FEATURES ?= "${DISTRO_FEATURES_DEFAULT} ${DISTRO_FEATURES_LIBC} ${IMX_DEFAULT_DISTRO_FEATURES}"
