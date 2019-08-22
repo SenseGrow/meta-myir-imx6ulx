@@ -4,6 +4,7 @@ include conf/machine/include/fsl-default-settings.inc
 include conf/machine/include/fsl-default-versions.inc
 
 include conf/machine/include/soc-family.inc
+require conf/machine/include/utilities.inc
 
 # Set specific make target and binary suffix
 PREFERRED_PROVIDER_u-boot ??= "u-boot-mys6ulx"
@@ -103,9 +104,24 @@ SOC_DEFAULT_IMAGE_FSTYPES = "wic.gz ext3 ubi ubifs"
 SDCARD_ROOTFS ?= "${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext4"
 IMAGE_FSTYPES ?= "${SOC_DEFAULT_IMAGE_FSTYPES}"
 
-SERIAL_CONSOLE = "115200 ttymxc0"
+SERIAL_CONSOLES = "115200;ttymxc0"
 
 KERNEL_IMAGETYPE = "zImage"
+
+# wic support
+IMAGE_BOOT_FILES ?= " \
+    ${KERNEL_IMAGETYPE} \
+    ${@make_dtb_boot_files(d)} \
+"
+
+### wic default support
+WKS_FILE_DEPENDS ?= " \
+    virtual/bootloader \
+    \
+    e2fsprogs-native \
+    bmap-tools-native \
+"
+WKS_FILE = "sdimage-bootpart.wks"
 
 MACHINE_FEATURES = "apm usbgadget usbhost vfat alsa touchscreen"
 
