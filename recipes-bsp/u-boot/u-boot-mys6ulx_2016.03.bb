@@ -8,10 +8,10 @@ PROVIDES += "u-boot"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://Licenses/gpl-2.0.txt;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
-SRCBRANCH = "mys-6ulx"
-UBOOT_SRC = "git:///${HOME}/MYiR-iMX-uboot;protocol=file"
-SRC_URI = "${UBOOT_SRC};branch=${SRCBRANCH}"
-SRCREV = "28cc50da55a891ba0ac09346f3a7a6cbb4a20970"
+SRCBRANCH = "master"
+SRCREV = "25ccfde10bd9a3859ff1346a2c1d3dd0be05592e"
+UBOOT_SRC = "git://github.com/SenseGrow/MYiR-iMX-uboot"
+SRC_URI = "${UBOOT_SRC};protocol=git;branch=${SRCBRANCH}"
 
 S = "${WORKDIR}/git"
 
