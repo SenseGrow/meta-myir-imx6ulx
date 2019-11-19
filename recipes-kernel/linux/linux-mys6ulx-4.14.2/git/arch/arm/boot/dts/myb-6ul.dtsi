@@ -149,6 +149,13 @@
     status = "okay";
 };
 
+/* Enable Tamper detection. There are 2 digital (0 and 1) and 2
+* analog (2 and 3) tamper interfaces.
+*/
+&mca_tamper {
+	digi,tamper-if-list = <0 1 2 3>;
+};
+
 &csi {
 	status = "okay";
 

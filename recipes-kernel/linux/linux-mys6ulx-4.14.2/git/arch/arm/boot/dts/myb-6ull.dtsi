@@ -6,7 +6,7 @@
  * published by the Free Software Foundation.
  */
 
-#include "imx6ull-pinfunc-snvs.h"
+#include "imx6ull-pinfunc-snvs"
 &iomuxc {
 	imx6ul-evk {
 		pinctrl_flexcan1: flexcan1grp{
@@ -23,6 +23,13 @@
 				MX6UL_PAD_UART1_CTS_B__GPIO1_IO18       0x1b0b1 /* RS485 RE/DE */
 			>;
 		};
+        pinctrl_uart5: uart5grp {
+			fsl,pins = <
+				MX6UL_PAD_UART5_RX_DATA__UART5_DCE_RX	0x1b0b1
+				MX6UL_PAD_UART5_TX_DATA__UART5_DCE_TX	0x1b0b1
+			>;
+		};
+
 
         pinctrl_enet1_alt: enet1grp {
 			fsl,pins = <
@@ -64,6 +71,7 @@
 		clocks = <&clks IMX6UL_CLK_SAI2>;
 		clock-names = "mclk";
 	};
+
 
 	ov5640: ov5640@3c {
 		compatible = "ovti,ov5640";
@@ -128,6 +136,8 @@
 		ethphy0: ethernet-phy@0 {
 			compatible = "ethernet-phy-ieee802.3-c22";
 			reg = <0>;
+			local-mac-address = [00 0a 35 00 00 02];
+			
 		};
 		ethphy1: ethernet-phy@1 {
 			compatible = "ethernet-phy-ieee802.3-c22";
@@ -143,6 +153,8 @@
     linux,rs485-enabled-at-boot-time;
 	status = "okay";
 };
+
+
 
 &flexcan1 {
 	pinctrl-names = "default";
