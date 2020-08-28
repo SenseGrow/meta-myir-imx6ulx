@@ -45,7 +45,7 @@
 			>;
 		};
         
-        pinctrl_enet2_alt: enet2grp {
+      /*  pinctrl_enet2_alt: enet2grp {
 			fsl,pins = <
 				MX6UL_PAD_GPIO1_IO06__ENET2_MDIO	0x1b0b0
 				MX6UL_PAD_GPIO1_IO07__ENET2_MDC		0x1b0b0
@@ -59,7 +59,7 @@
 				MX6UL_PAD_ENET2_TX_CLK__ENET2_REF_CLK2	0x4001b031
 				MX6ULL_PAD_SNVS_TAMPER8__GPIO5_IO08	0x1b0b0
 			>;
-		};
+		};*/
     };
 };
 
@@ -121,7 +121,7 @@
     status = "okay";
     /delete-node/ mdio;
 };
-
+/*
 &fec2 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_enet2_alt>;
@@ -145,7 +145,7 @@
 		};
 	};
 };
-
+*/
 &uart3 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_uart3>;
@@ -166,7 +166,7 @@
 &sai2 {
     status = "okay";
 };
-
+/*
 &csi {
 	status = "okay";
 
@@ -197,3 +197,4 @@
 			"IN1L", "Mic";
     };
 };
+*/
