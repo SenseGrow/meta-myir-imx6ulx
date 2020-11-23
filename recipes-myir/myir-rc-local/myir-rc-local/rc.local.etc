@@ -11,4 +11,5 @@
 #
 # By default this script does nothing.
 insmod /wlan.ko &
+sh /etc/nwreload.sh &
 exit 0

@@ -13,17 +13,12 @@
 };
 
 
-
+/*
 &usdhc1 {
-    pinctrl-names = "default";
-    pinctrl-0 = <&pinctrl_usdhc1>;
-	keep-power-in-suspend;
-	enable-sdio-wakeup;
-	cd-gpios = <&gpio1 19 GPIO_ACTIVE_LOW>;
-	bus-width = <4>;
 	status = "okay";
 };
-/*
+*/
+
 &usdhc1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_usdhc1 &pinctrl_wifi>;
@@ -32,7 +27,7 @@
 	non-removable;
 	status = "okay";
 };
-*/
+
 
 &usdhc2 {
 	pinctrl-names = "default";
